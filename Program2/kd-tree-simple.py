@@ -10,7 +10,7 @@ import sys
 sys.path.append('/usr/local/lib/python3.4/site-packages/')
 import math
 #from graphviz import *
-import pygraphviz as gv
+import graphviz as gv
 import functools
 import time
 

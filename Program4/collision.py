@@ -14,8 +14,10 @@ from pointQuadTree import *
 # Add ShapeModules (which holds Point,Rect,Polygon) folder to the path
 # so we can use those shapes.
 import sys
-sys.path.append("../ShapeModules")
-from BoundingBox import *
+sys.path.append ("C:\Users\Kem\Documents\GitHub\4553.spatial.kem\Program4\ShapeModules")
+sys.path.append("C:\Users\Kem\Documents\GitHub\4553.spatial.kem\Program4\pantograph\pantograph")
+import ShapeModules
+from ShapeModules.BoundingBox import *
 import pantograph
 import time
 
@@ -51,7 +53,7 @@ class RectQuadTree(object):
             self.rects.append(r)
             return True
         elif self.northEast == None:
-            print "subdividing"
+            print ("subdividing")
             # Otherwise we split this node into NW/NE/SE/SW quadrants
             self.subdivide()
 
