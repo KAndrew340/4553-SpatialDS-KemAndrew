@@ -110,6 +110,8 @@ visually.
 class DrawAstar(pantograph.PantographHandler):
 
     """
+    @function setup
+
     Our constructor
     """
     def setup(self):
@@ -125,6 +127,8 @@ class DrawAstar(pantograph.PantographHandler):
         print self.height/self.block
 
     """
+    @function startAstar
+
     Start the Astar pathfind algorithm aka RELEASE THE KRAKEN!
     """
     def startAstar(self):
@@ -161,6 +165,8 @@ class DrawAstar(pantograph.PantographHandler):
     #def addElement(self.element,x1,y1,x2,y2)
 
     """
+    @function update
+
     Continous calls to redraw necessary items
     """
     def update(self):
@@ -177,7 +183,15 @@ class DrawAstar(pantograph.PantographHandler):
 
 
     """
-    Draw the found path
+    @function drawPatch
+
+    Draw the patch
+
+    @param  {integer} - x1: x1-coordinate
+    @param  {integer} - y1: y1-coordinate
+    @param  {integer} - x2: x2-coordinate
+    @param  {integer} - y2: y2-coordinate
+    @param  {image} - element: image
     """
     def drawPatch(self,x1,y1,x2,y2,element):
         x1,y1 = self.adjustCoords(x1,y1)
@@ -187,9 +201,9 @@ class DrawAstar(pantograph.PantographHandler):
             for y in range(y1,y2,self.block):
                 self.draw_image(element,x ,y, self.block, self.block)
 
-
-
     """
+    @function drawPath
+
     Draw the found path
     """
     def drawPath(self):
@@ -199,6 +213,8 @@ class DrawAstar(pantograph.PantographHandler):
             self.fill_rect(x, y, self.block , self.block , "#00F")
 
     """
+    @function drawGrid
+
     Draw the background grid
     """
     def drawGrid(self):
@@ -206,10 +222,14 @@ class DrawAstar(pantograph.PantographHandler):
            self.draw_line(i, 0, i, self.height, "#AAAAAA")
            self.draw_line(0, i, self.width, i , "#AAAAAA")
 
-
     """
+    @function toggleObstacle
+
     Toggle means that it draws an obstacle, unless you click on
     an already "obstacled" cell, then it turns off
+
+    @param  {integer} - x: x-coordinate
+    @param  {integer} - y: y-coordinate
     """
     def toggleObstacle(self,x,y):
         gridX = x
@@ -246,14 +266,20 @@ class DrawAstar(pantograph.PantographHandler):
     #             #print self.obstacles
     #             #print self.adjObstacles
 
+
     """
-    Draws the obstacles :)
+    @function drawObstacles
+
+    Draws the obstacles
     """
     def drawObstacles(self):
         for r in self.obstacles:
             self.fill_rect(r[0], r[1], self.block , self.block , "#000")
 
+
     """
+    @function drawStartFinish
+
     Draws the start and finish coordinates
     """
     def drawStartFinish(self):
@@ -266,11 +292,15 @@ class DrawAstar(pantograph.PantographHandler):
             self.fill_rect(x, y, self.block , self.block , "#F00")
 
     """
+    @function on_mouse_down
+
     Event handlers for the mouse down event.
     Alt + LeftClick = add obstacle
     Ctrl + LeftClick = place start location
     Command + LeftClick = place end location
     Shift + LeftClick = Draw a line obstacle
+
+    @param  {event} - e - an event handler
     """
     def on_mouse_down(self,e):
         print e
@@ -290,7 +320,11 @@ class DrawAstar(pantograph.PantographHandler):
             self.drawLine(x,y)
 
     """
+    @function on_key_down
+
     Key press handlers
+
+    @param  {event} - e - an event handler
     """
     def on_key_down(self,e):
         print e
@@ -302,7 +336,12 @@ class DrawAstar(pantograph.PantographHandler):
             pass
 
     """
+    @function drawLine
+
     This simply draws a complete line on the x axis (minus 1 cell).
+
+    @param  {integer} - x: x-coordinate
+    @param  {integer} - y: y-coordinate
     """
     def drawLine(self,x,y):
         for i in range(0,self.width,self.block):
@@ -310,15 +349,20 @@ class DrawAstar(pantograph.PantographHandler):
             self.toggleObstacle(i,y)
 
     """
+    @function on_dbl_click
+
     Double Click starts the path finding.
+
+    @param  {event} - e - an event handler
     """
     def on_dbl_click(self,e):
         print e
         self.startAstar()
 
 
-
     """
+    @function refreshWorld
+
     Space bar erases the path, so you can go again
     """
     def refreshWorld(self):
@@ -326,7 +370,12 @@ class DrawAstar(pantograph.PantographHandler):
         self.path = []
 
     """
+    @function addStart
+
     Adds the start cell
+
+    @param  {integer} - x: x-coordinate
+    @param  {integer} - y: y-coordinate
     """
     def addStart(self,x,y):
         self.fill_rect(x, y, self.block , self.block , "#F00")
@@ -337,15 +386,26 @@ class DrawAstar(pantograph.PantographHandler):
 
     def getFinish(self):
         return addFinish.finishCoord
+
     """
+    @function addFinish
+
     Adds the finish cell
+
+    @param  {integer} - x: x-coordinate
+    @param  {integer} - y: y-coordinate
     """
     def addFinish(self,x,y):
         self.fill_rect(x, y, self.block , self.block , "#0F0")
         self.finishCoord = x,y
 
     """
+    @function adjustCoords
+
     Fattens the coords to fit grid.
+
+    @param  {integer} - x: x-coordinate
+    @param  {integer} - y: y-coordinate
     """
     def adjustCoords(self,x,y):
         """adjust the coords to fit our grid"""
