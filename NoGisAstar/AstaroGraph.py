@@ -1,10 +1,20 @@
+"""
+@author - Kem Andrew
+@date -  11/27/2015
+@description -
+
+@resources - https://github.com/rugbyprof/4553-Spatial-DS.git
+"""
 from math import sqrt
 from itertools import product
 import pantograph
+import time
+
+start_time = time.time()
 
 """
 START Astar Implementation
-Obtained from gisthub and pulled out of its own file `astar.py` to
+Obtained from github and pulled out of its own file `astar.py` to
 make it a little easier to incorporate pantgraph
 """
 class AStar():
@@ -103,11 +113,11 @@ class DrawAstar(pantograph.PantographHandler):
     Our constructor
     """
     def setup(self):
-        self.block = 10                 # grid size on the browser
+        self.block = 30                 # grid size on the browser
         self.obstacles = []             # cells in the grid to block astar
         self.adjObstacles = []          # adjusted for astar because each grid cell is "block" times big.
-        self.startCoord = None          # Start Cell
-        self.finishCoord = None         # Finish Cell
+        self.startCoord = ()          # Start Cell
+        self.finishCoord = ()         # Finish Cell
         self.pathFound = False          # Set path found to false so we don't try to draw it right off
         self.path = None                # Holds the found path (if any) so we can draw it.
 
@@ -160,8 +170,10 @@ class DrawAstar(pantograph.PantographHandler):
         self.drawStartFinish()
         if self.pathFound:
             self.drawPath()
-        self.drawPatch(400,400,900,900,'brick.png')
-
+        self.drawPatch(400,400,700,700,'brick.png')
+        self.drawPatch(100,100,200,200, 'fire.png')
+        self.drawPatch(300,300,500,500, 'brick.png')
+        self.drawPatch(400,00,100,300, 'grass.png')
 
 
     """
@@ -274,7 +286,7 @@ class DrawAstar(pantograph.PantographHandler):
             self.addStart(x,y)
         elif e.meta_key:
             self.addFinish(x,y)
-        elif e.shift_key:
+        elif e.shift_key :
             self.drawLine(x,y)
 
     """
@@ -318,14 +330,19 @@ class DrawAstar(pantograph.PantographHandler):
     """
     def addStart(self,x,y):
         self.fill_rect(x, y, self.block , self.block , "#F00")
-        self.startCoord =(x,y)
+        self.startCoord = x,y
 
+    def getStart(self):
+        return addStart.startCoord
+
+    def getFinish(self):
+        return addFinish.finishCoord
     """
     Adds the finish cell
     """
     def addFinish(self,x,y):
         self.fill_rect(x, y, self.block , self.block , "#0F0")
-        self.finishCoord = (x,y)
+        self.finishCoord = x,y
 
     """
     Fattens the coords to fit grid.
@@ -341,3 +358,5 @@ Main Driver!!!
 if __name__ == '__main__':
     app = pantograph.SimplePantographApplication(DrawAstar)
     app.run()
+
+print("Program ran in %s seconds." % (time.time() - start_time))

@@ -9,7 +9,6 @@
 import math
 import random
 import numpy as np
-import time
 from pointQuadTree import *
 # Add ShapeModules (which holds Point,Rect,Polygon) folder to the path
 # so we can use those shapes.
@@ -361,5 +360,5 @@ class Driver(pantograph.PantographHandler):
 if __name__ == '__main__':
     app = pantograph.SimplePantographApplication(Driver)
     app.run()
-	
+
 print("Program ran in %s seconds." % (time.time() - start_time))
