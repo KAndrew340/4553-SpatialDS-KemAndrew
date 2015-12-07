@@ -15,7 +15,7 @@ start_time = time.time()
 """
 START Astar Implementation
 Obtained from github and pulled out of its own file `astar.py` to
-make it a little easier to incorporate pantgraph
+make it a little easier to incorporate pantograph
 """
 class AStar():
     def __init__(self, graph):
@@ -78,9 +78,9 @@ class AStarGridNode(AStarNode):
         self.x, self.y = x, y
         super(AStarGridNode, self).__init__()
 
-    def move_cost(self, other):
-        diagonal = abs(self.x - other.x) == 1 and abs(self.y - other.y) == 1
-        return 14 if diagonal else 10
+    #def move_cost(self, other):
+        #diagonal = abs(self.x - other.x) == 1 and abs(self.y - other.y) == 1
+        #return 14 if diagonal else 10
 
     def __repr__(self):
         return '(%d %d)' % (self.x, self.y)
@@ -139,8 +139,8 @@ class DrawAstar(pantograph.PantographHandler):
         paths = AStarGrid(graph)
 
         # Pull start and finish cell coordinates off the grid
-        startx,starty = self.startCoord
-        finishx,finishy = self.finishCoord
+        startx,starty = self.startCoord, self.startCoord
+        finishx,finishy = self.finishCoord, self.finishCoord
 
         # Divide block size into the coordinates to
         # bring them back to the original state
@@ -179,7 +179,7 @@ class DrawAstar(pantograph.PantographHandler):
         self.drawPatch(400,400,700,700,'brick.png')
         self.drawPatch(100,100,200,200, 'fire.png')
         self.drawPatch(300,300,500,500, 'brick.png')
-        self.drawPatch(400,00,100,300, 'grass.png')
+        self.drawPatch(300,00,100,200, 'grass.png')
 
 
     """
@@ -250,21 +250,21 @@ class DrawAstar(pantograph.PantographHandler):
     blockage. Basically a nested loop that added  the values
     -1, 0 ,1 on subsequent iterations to fatten the obstacle.
     """
-    # def toggleObstacle(self,x,y):
-    #     for i in range(-self.block,self.block,self.block):
-    #         for j in range(-self.block,self.block,self.block):
-    #             gridX = x+i
-    #             gridY = y+j
-    #             adjX = gridX / self.block
-    #             adjY = gridY / self.block
-    #             if [gridX,gridY] not in self.obstacles:
-    #                 self.obstacles.append([gridX,gridY])
-    #                 self.adjObstacles.append([adjX,adjY])
-    #             else:
-    #                 self.obstacles.remove([gridX,gridY])
-    #                 self.adjObstacles.remove([adjX,adjY])
-    #             #print self.obstacles
-    #             #print self.adjObstacles
+    def toggleObstacle(self,x,y):
+         for i in range(-self.block,self.block,self.block):
+             for j in range(-self.block,self.block,self.block):
+                 gridX = x+i
+                 gridY = y+j
+                 adjX = gridX / self.block
+                 adjY = gridY / self.block
+                 if [gridX,gridY] not in self.obstacles:
+                     self.obstacles.append([gridX,gridY])
+                     self.adjObstacles.append([adjX,adjY])
+                 else:
+                     self.obstacles.remove([gridX,gridY])
+                     self.adjObstacles.remove([adjX,adjY])
+                 #print self.obstacles
+                 #print self.adjObstacles
 
 
     """
@@ -380,6 +380,7 @@ class DrawAstar(pantograph.PantographHandler):
     def addStart(self,x,y):
         self.fill_rect(x, y, self.block , self.block , "#F00")
         self.startCoord = x,y
+        #return self.startCoord
 
     def getStart(self):
         return addStart.startCoord
